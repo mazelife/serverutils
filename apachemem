@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+echo "**************************************";
+echo "Memory usage of all apache processes:";
+echo "**************************************";
+ps -eo pid,comm,user,%mem,rss | grep "apache2" | awk '{ print $2 " (" $1 "): " $5 " kB -- " $4 "% of available"}';
+ps -eo comm,rss | grep "apache2" | awk '{s+=$2} END {print "Total memory used: " s/1024 " MB"}'
