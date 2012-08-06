@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Look for coffescript files, see if they need to be compiled
+# (in other words mathcin JS odens't exist or is different)
+# and then do so. 
+
+FILES=$(find . -type f -name *.coffee)
+for cs_file in $FILES
+do 
+    js_file=${cs_file/coffee/js};
+    if [ -f $js_file ]; then
+        if cmp -s <( cat static/js/admin.js ) <(coffee -pc static/js/admin.coffee ); then
+            echo "$cs_file not compiled; nothing changed."
+         else
+             coffee -c $cs_file &> /dev/null && echo "$cs_file compiled."
+         fi
+     else
+         coffee -c $cs_file &> /dev/null && echo "$cs_file compiled."
+     fi
+done
+
