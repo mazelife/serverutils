@@ -4,6 +4,8 @@
 # (in other words mathcin JS odens't exist or is different)
 # and then do so. 
 
+command -v coffee >/dev/null 2>&1 || { echo >&2 "Coffeescript not installed."; exit 1; }
+
 FILES=$(find . -type f -name *.coffee)
 for cs_file in $FILES
 do 
